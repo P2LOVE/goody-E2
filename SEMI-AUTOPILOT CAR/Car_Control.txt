@@ -1,9 +1,9 @@
 @name Car Control
-@inputs Brake Sit WIn Space S
+@inputs Brake Sit WIn Space S W2
 @outputs HandBrake Thr Eng Summ
 @persist 
 @trigger 
-
+WIn=WIn+W2
 Eng=Sit
 HandBrake=Space
 Summ=WIn+S

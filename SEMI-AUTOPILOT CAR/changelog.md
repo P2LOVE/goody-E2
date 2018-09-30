@@ -26,3 +26,12 @@
 1.1.1
 
 +Minor Fixes
+
+
+1.2
+
+
++Minor Fixes
+
+
++ADD CRUISE CONTROL

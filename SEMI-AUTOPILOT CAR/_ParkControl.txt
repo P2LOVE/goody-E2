@@ -1,9 +1,10 @@
 @name  ParkControl
-@inputs BackIn FrontR FrontL Left Right Speed Shift But WW SS ZF ZB DacEn Hold Sit
-@outputs Brake BackO FrontRO FrontLO LeftO RightO SpeedR BrakeReady BrakeStart W ABR DAC DacUp DacDw AHold Error EBrake ABRDAC
+@inputs BackIn FrontR FrontL Left Right Speed Shift But WW SS ZF ZB DacEn Hold Sit CCDown CCUp CCSet
+@outputs Brake WOut BackO FrontRO FrontLO LeftO RightO SpeedR BrakeReady BrakeStart W ABR DAC DacUp DacDw AHold Error EBrake ABRDAC ACC SummCar CCStatus CCPuk
 @persist 
 @trigger 
-if(Sit == 0){
+
+if(Sit == 0){ 
 SpeedR=0}else{SpeedR=round(Speed)}
 if(DacUp == 1 | DacDw == 1){Shift=1}
 DacUp=0
@@ -107,3 +108,29 @@ Brake=100}else{Brake=0}
 }}else{ Brake=0
 ABR=0}
 }
+if(ABR == 0 | But == 0){
+AntiABR=1}else{AntiABR=0}
+if(SummCar > 0){
+    CCStatus=0
+    CCSet=0
+    CCPuk=0
+}
+if(SpeedR < 20){
+CCStatus=0}
+if(SpeedR > 20 & ABR == 1 & But == 1){
+if(CCSet == 1 & CCStatus == 0){
+CCStatus=SpeedR}
+if(CCPuk > 1.5){ 
+if(SpeedR < CCStatus){
+    WOut=1}
+    if(SpeedR > CCStatus){
+WOut=0}}
+if(CCStatus > 20){
+    if(CCUp == 1 & CCStatus < 50 & CCDown == 0){
+    CCStatus=CCStatus+5}
+if(CCDown == 1 & CCStatus > 25 & CCUp == 0){
+CCStatus=CCStatus-5}}}
+CCPuk=(max(SpeedR,CCStatus)-min(CCStatus,SpeedR))
+SummCar=WW+SS+Brake+AntiABR
+if(CCStatus > 0){
+ACC=1}else{ACC=0}

@@ -1,5 +1,5 @@
 @name  ScreenControl
-@inputs  ABR SpeedR Lock Eng Brake Z1 Y1 X1 DAC1 UAC Daaac Error AHold
+@inputs  ABR SpeedR Lock Eng Brake Z1 Y1 X1 DAC1 UAC Daaac Error AHold ACC CCSpeed
 @outputs  SpeedOR Screen:string Color:vector
 @persist AHoldE:string TurnLock:string TurnEng:string ErS:string AntiImpact:string Stats:string ABRS:string Z:string X:string Y:string Red:vector Def:vector DAC:string DACEN:string UACEN:string
 @trigger 
@@ -55,6 +55,11 @@ Screen=UACEN}
 if(Eng == 1 & Brake == 0 & Daaac > 0){
 Screen=DACEN}
 }
+if(ACC == 1){
+ACCSt="Enabled"
+CCL="\nCC Speed: "+CCSpeed+" km/h"}else{ACCSt="Disabled"
+CCL=""}
+
 
 if(ABR == 1){ABRS="  Enabled"}else{ABRS="  Disabled"}
 ErS="\n\n\n\n\n\n          AutoHold needs DAC-UAC \n           and Auto-Brakes Enabled"
@@ -63,4 +68,4 @@ DACEN="\n\n\n\n\n\n      Downhill Assist Control: Working.  \n                 A
 TurnLock="\n \n \n \n \n \n                     CAR LOCKED. \n                      INSERT KEY"
 TurnEng="\n \n \n \n \n \n             ENGINE TURNED OFF. \n       TURN KEY AND SIT INTO CAR"
 AntiImpact="\n \n \n                IMPACT WARNING! \n              AUTO BRAKE SYSTEM. \n \n\n\n\n       THROTTLE TO RELEASE CAR\n             AND START ENGINGE \n \n\n       OR CLICK & HOLD LMB KEY"
-Stats="\n\n GPS: "+Z+Y+X+"\n\n\n\n Hill Assist Control:"+DAC+"\n"+AHoldE+"\n\n\n Auto-Brake System:"+ABRS
+Stats="\n\n GPS: "+Z+Y+X+"\n\n\n\n Hill Assist Control:"+DAC+"\n"+AHoldE+"\n\n\n Auto-Brake System:"+ABRS+"\n\n AdaptiveCC: "+ACCSt+CCL
